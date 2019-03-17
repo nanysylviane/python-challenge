@@ -1,1 +1,77 @@
-main.py
+PyBank.py
+
+import os
+import csv
+
+
+#Creating an object out of the CSV file
+budget_data = os.path.join("budget_data.csv")
+
+
+total_months_count = 0
+total_Profit_losses = 0
+value = 0
+change = 0
+dates = []
+profits = []
+
+
+#Opening and reading the CSV file
+with open(budget_data, newline = "") as csvfile:
+    csvreader = csv.reader(csvfile, delimiter = ",")
+
+
+    #Reading the header row
+    csv_header = next(csvreader)
+
+
+    #Reading the first row (so that we track the changes properly)
+    first_row = next(csvreader)
+    total_months_count =  total_months_count+1
+    total_Profit_losses =  total_Profit_losses+int(first_row[1])
+    value = int(first_row[1])
+    
+    #Going through each row of data after the header & first row 
+    for row in csvreader:
+        # Keep track of the dates
+        dates.append(row[0])
+        
+        # Calculate the change and add  
+        change = int(row[1])-value
+        profits.append(change)
+        value = int(row[1])
+        
+        #Total count of months
+        total_months_count =  total_months_count+1
+
+
+        #Total net amount of "Profit/Losses over entire period"
+        total_Profit_losses =total_Profit_losses + int(row[1])
+
+
+    #Greatest increase in profits
+    greatest_increase = max(profits)
+    greatest_index = profits.index(greatest_increase)
+    greatest_date = dates[greatest_index]
+
+
+    #Greatest decrease in profits 
+    greatest_decrease = min(profits)
+    lowest_index = profits.index(greatest_decrease)
+    lowest_date = dates[worst_index]
+
+
+    #Average change in "Profit/Losses between months over entire period round to 2 decimal
+    avg_change = round(sum(profits)/len(profits),2)
+    
+
+
+# print out text 
+print("Financial Analysis")
+print("---------------------")
+print(f"Total Months: {str(total_months)}")
+print(f"Total: ${str(total_Profit_losses)}")
+print(f"Average Change: ${str(avg_change,)}")
+print(f"Greatest Increase in Profits: {greatest_date} (${str(greatest_increase)})")
+print(f"Greatest Decrease in Profits: {lowest_date} (${str(greatest_decrease)})")
+
