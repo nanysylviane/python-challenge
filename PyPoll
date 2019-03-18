@@ -1,1 +1,133 @@
-main.py
+PyPoll
+
+
+import os
+
+import csv
+
+
+
+csvelection = os.path.join('election_data.csv')
+
+
+
+with open(csvelection, 'r') as csvfile:
+
+
+
+    csvreader = csv.reader(csvfile, delimiter=',')
+
+    #print(data)
+
+    header = next( csvreader)
+
+    #print(f"Header: {header}")
+
+
+
+
+
+    for row in  csvreader:                            
+
+        row_count =1+sum(1 for row in csvreader )
+
+             
+
+with open(csvelection, 'r') as csvfile:
+
+
+
+    csvreader = csv.reader(csvfile, delimiter=',')
+
+    #print(data)
+
+    header = next(csvreader)
+
+    cand_1 = "Khan"
+
+    cand_2 = "Correy"
+
+    cand_3 = "Li"
+
+    cand_4 = "O'Tooley"
+
+    Kahn_votes = 0
+
+    Correy_votes = 0
+
+    Li_votes = 0
+
+    Ot_votes = 0
+
+    
+
+    for row in csvreader:
+
+        if row[2] == cand_1:
+
+            Kahn_votes = Kahn_votes + 1
+
+            
+
+        if row[2] == cand_2:
+
+            Correy_votes = Correy_votes + 1
+
+        
+
+        if row[2] == cand_3:
+
+            Li_votes = Li_votes + 1    
+
+
+
+        if row[2] == cand_4:
+
+            Ot_votes = Ot_votes + 1
+
+    #calculate the percentage per canditates
+    
+    percent_kh = (Kahn_votes/row_count)*100
+    percent_co = (Correy_votes/row_count)*100
+    percent_l = (Li_votes/row_count)*100
+    percent_o = (Ot_votes/row_count)*100
+    
+    # Rounding up at 2 decimal place 
+    
+    percent_khan = round(percent_kh,2)
+
+    percent_correy = round(percent_co,2)
+
+    percent_li = round(percent_l,2)
+
+    percent_ot = round(percent_o,2)
+
+   #list each canditate with it's percentage
+
+    d = {"Kahn": percent_khan, "Correy": percent_correy, "Li": percent_li, "O'Tooley": percent_ot}
+
+   #the max  vote for the winner using the key parameter
+
+    winner = max(d, key=d.get)
+
+    
+
+    print("   Election Results") 
+
+    print("---------------------------------------------------------")
+
+    print(f'Total votes:{row_count}')
+
+    print(f'Kahn:      {percent_khan} % ({Kahn_votes})')
+
+    print(f'Correy:    {percent_correy} % ({Correy_votes})')
+
+    print(f'Li:        {percent_li} % ({Li_votes})')
+
+    print(f"O'Tooley:  {percent_ot} % ({Ot_votes})")
+
+    print("---------------------------------------------------------")
+
+    print(f'The winner is: {winner}')
+
+    print("---------------------------------------------------------")
